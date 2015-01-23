@@ -1,0 +1,20 @@
+# add the following to your .bashrc file and 
+# start container with "dokdroid"
+
+export XSOCK=/tmp/.X11-unix
+export XAUTH=/tmp/.docker.xauth
+
+alias xau='touch /tmp/.docker.xauth; xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -'
+alias xdok='chmod a+rw /tmp/.docker.xauth; sudo docker run --cap-drop all -ti -v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e DISPLAY=:0 -e XAUTHORITY=$XAUTH '
+
+alias dokdroid='xdok --name dokdroid -h dokdroid -v ~/Workspace:/home/dev/Workspace --privileged -v /dev/bus/usb:/dev/bus/usb -v /dev/kvm:/dev/kvm -v /var/run/libvirt:/var/run/libvirt your-image-name'
+
+#init
+xau
+
+
+
+
+
+
+
